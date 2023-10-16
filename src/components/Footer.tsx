@@ -1,8 +1,8 @@
 const Footer = () => {
     return (  
-        <div>
+        <footer>
             Все права защищены &copy;
-        </div>
+        </footer>
     );
 }
  
