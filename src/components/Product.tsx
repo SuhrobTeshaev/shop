@@ -1,23 +1,26 @@
-
-import React,{FC} from "react";
+import React, { FC } from "react";
 import { IProduct } from "../types/types";
 
 interface ProductProps {
-     product:IProduct   
+  product: IProduct;
 }
-const Product:FC<ProductProps> = ({product}) => {
-    return <div className="card"> 
-     <div  className='product-card'key={product.id}>
-            <img src={product.image} alt={product.title} />
-            <h2>{product.title}</h2>
-            <b>{product.price}</b>
-            {/* <p>{product.description}</p> */}
-            </div>
-            </div >
+const Product: FC<ProductProps> = ({ product }) => {
+  return (
+
+      <div className="container" key={product.id}>
+          <div className="product-card">
+               <div className="card">
+          <img src={product.image} alt={product.title} />
+          <h3>{product.title}</h3>
+          <p>{product.description}</p>
+          <b>{product.price}</b>
+          <div className="add-to-card">+</div>
+        </div>
+        </div>
+        
+      </div>
     
-  
-            
-     
-}
- 
+  );
+};
+
 export default Product;

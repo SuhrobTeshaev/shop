@@ -70,22 +70,67 @@ header .presentation::before {
   }
    
 
-  .card {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 100%;
-  }
-  .card .product-card {
-    width: 20%;
-    margin-bottom: 50px;
-    background: #f5f5f5;
-  }
 
-  .card .product-card img {
-    width: 100%;
-  }
 
+
+.container {
+  display: inline-block;
+  justify-content: space-between;
+  width: 30%;
+  row-gap: 10px;
+  column-gap: 10px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #777;
+  border: 1px solid #000;
+  height: 500px;
+  padding: 2rem;
+margin:50px 50px;
+position: relative;
+padding-bottom: 20px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  transition: transform 500ms ease;
+}
+
+.card img:hover {
+  transform: scale(1.05);
+}
+
+.card h3, .card p, .card b {
+  margin: 10px 2px;
+  color: #333;
+}
+.card b {
+  color: #5fa35f;
+}
+
+.card .add-to-card {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: #ca5252;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 500ms ease;
+  
+}
+.card .add-to-card:hover {
+  transform: scale(1.5) translate(-5px);
+
+}
   footer {
     text-align: center;
     margin-top: 100px;
