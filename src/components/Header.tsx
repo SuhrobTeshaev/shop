@@ -2,8 +2,9 @@ const Header = () => {
     return ( 
         <div>
             <div>
-                <span></span>
+                <span>Laptops</span>
             </div>
+            
         </div>
      );
 }
