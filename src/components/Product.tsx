@@ -3,7 +3,10 @@ import { IProduct } from "../types/types";
 
 interface ProductProps {
   product: IProduct;
+  
 }
+
+
 const Product: FC<ProductProps> = ({ product }) => {
   return (
 
@@ -11,10 +14,13 @@ const Product: FC<ProductProps> = ({ product }) => {
           <div className="product-card">
                <div className="card">
           <img src={product.image} alt={product.title} />
-          <h3>{product.title}</h3>
-          <p>{product.description}</p>
-          <b>{product.price}</b>
-          <div className="add-to-card">+</div>
+          <div className="context">
+            <h3>{product.title}</h3>
+          {/* <p>{product.description}</p> */}
+          <b>{product.price}$</b>
+          </div>
+          
+          <div className="add-to-card" >+</div>
         </div>
         </div>
         

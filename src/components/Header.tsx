@@ -4,7 +4,7 @@ const Header = () => {
             <div>
                 <span>Laptops</span>
                 <ul className="nav">
-                    <li>О нас </li>
+                    <>О нас </li>
                     <li>Контакты</li>
                     <li>Корзина</li>
                 </ul>
