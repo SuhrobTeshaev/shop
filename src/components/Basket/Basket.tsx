@@ -33,13 +33,13 @@ const Basket:FC<BasketProps> = ({product}) => {
                         </td>
                         <td>{product.price*product.count}</td>
                         <td>
-                            <button onClick={()=>removeProduct(product.id)}>X</button>
+                            <button >X</button>
                         </td>
                     </tr>
             
             </tbody>
         </table>
-        {!!products.length && Result}
+        
         </> 
     );
 }
