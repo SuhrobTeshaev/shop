@@ -36,7 +36,11 @@ async (arg,thunkAPI)=>{
         related:[],
         isLoading:false
     },
-    reducers:{},    
+    reducers:{
+        filterByPrice: (state,{payload})=>{
+            state.filtered = state.list.filter(({price})=>price <payload);
+        }
+    },    
     extraReducers:(builder)=>{
         builder.addCase(getProducts.pending,(state)=>{
             state.isLoading=true;   
@@ -50,5 +54,5 @@ async (arg,thunkAPI)=>{
         });
     }
  })
-
+ export const {filterByPrice} = ProductsSlice.actions
  export default ProductsSlice.reducer;
