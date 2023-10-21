@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
 
-
     
 export interface User {
     name:string,
-    id:number
+    id:number,
+   
 }
 
 export interface UserState {
@@ -27,17 +27,17 @@ async (payload,thunkAPI)=>{
         return thunkAPI.rejectWithValue(err);
     }
 });
-export const createUser = createAsyncThunk('users/createUser',
-async (payload,thunkAPI)=>{
-    try{
-        const res = await axios.post(`${BASE_URL}/users`, payload);
-        return res.data;    
-    } catch(err){
-        console.log(err);
-        return thunkAPI.rejectWithValue(err);
-    }
+// export const createUser = createAsyncThunk('users/createUser',
+// async (payload,thunkAPI)=>{
+//     try{
+//         const res = await axios.post(`${BASE_URL}/users`, payload);
+//         return res.data;    
+//     } catch(err){
+//         console.log(err);
+//         return thunkAPI.rejectWithValue(err);
+//     }
     
-}); 
+// }); 
 // тут остановились сверху (2.26.02 время видео)
 
  const UserSlice = createSlice({
@@ -48,19 +48,23 @@ async (payload,thunkAPI)=>{
         isLoading:false,
         formType:'signup',
         showForm:false,
+        
+        
     },
     reducers:{
+    
         addItemToCart:(state,{payload})=>{
             let newCart = [...state.cart];
             const found = state.cart.find(({id}) =>id === payload.id);
             if(found){
-                newCart = newCart.map((item)=>{
-                    return item.id ===payload.id?
+                 newCart => newCart.map((item) => {
+                    return  item.id === payload.id?
                     {...item,quantity:payload.quantity || item.quantity+1}
                     :item;
                 });
 
-            }else newCart.push({payload,quantity:1})
+            } else 
+            // newCart.push({...payload, quantity:1 })
             state.cart = newCart;
         },
         toggleForm:(state,{payload})=>{

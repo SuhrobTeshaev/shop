@@ -6,7 +6,8 @@ import { BASE_URL } from "../../utils/constant";
     
 export interface Categories {
     name:string,
-    id:number
+    id:number,
+    devtools:boolean
 }
 
 export interface CategoriesState {

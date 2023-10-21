@@ -41,9 +41,9 @@ async (arg,thunkAPI)=>{
         filterByPrice: (state,{payload})=>{
             state.filtered = state.list.filter(({price})=>price <payload);
         },
-        getReletedProducts:(state,{payload})=>{
-            const list = state.list.filter(({category:{id}})=>id === payload)
-            state.related = shuffle(list);
+        getRelatedProducts:(state,{payload})=>{
+            const list = state.list.filter(({category:{id}})=>id === payload);
+            // state.related = shuffle(list);
         },
     },    
     extraReducers:(builder)=>{
@@ -59,5 +59,5 @@ async (arg,thunkAPI)=>{
         });
     }
  })
- export const {filterByPrice,getReletedProducts} = ProductsSlice.actions
+ export const {filterByPrice,getRelatedProducts} = ProductsSlice.actions
  export default ProductsSlice.reducer;
