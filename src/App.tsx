@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import { getCategories } from './features/categories/CategoriesSlice';
 import { AppDispatch } from './features/store';
 import { getProducts } from './features/products/ProductsSlice';
+import { UserForm } from './components/user/UserForm';
 
 
 function App() {
@@ -19,6 +20,7 @@ useEffect(()=>{
   return (
     <div className="App">
       <Header/>
+      <UserForm/>
       <div className='container'>
         <Sidebar/>
         <AppRoutes/>

@@ -4,36 +4,38 @@ import { BASE_URL } from "../../utils/constant";
 
 
     
-export interface Categories {
+export interface User {
     name:string,
     id:number
 }
 
-export interface CategoriesState {
-    categories:Categories[]
+export interface UserState {
+    user:User[]
 }
-const initialState: CategoriesState = {
-    categories:[]
+const initialState: UserState = {
+    user:[]
 }
 
 
-// export const getCategories = createAsyncThunk('categories/getCategories',
-// async (arg,thunkAPI)=>{
-//     try{
-//         const res = await axios(`${BASE_URL}/categories`);
-//         return res.data;    
-//     } catch(err){
-//         console.log(err);
-//         return thunkAPI.rejectWithValue(err);
-//     }
-// });
+export const createUser = createAsyncThunk('users/createUser',
+async (payload,thunkAPI)=>{
+    try{
+        const res = await axios.post(`${BASE_URL}/users`, payload);
+        return res.data;    
+    } catch(err){
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+    }
+});
 
  const UserSlice = createSlice({
     name:'user',
     initialState:{
-        currentUser:[],
+        currentUser:null,
         cart:[],
-        isLoading:false
+        isLoading:false,
+        formType:'signup',
+        showForm:false,
     },
     reducers:{
         addItemToCart:(state,{payload})=>{
@@ -48,20 +50,23 @@ const initialState: CategoriesState = {
 
             }else newCart.push({payload,quantity:1})
             state.cart = newCart;
+        },
+        toggleForm:(state,{payload})=>{
+            state.showForm = payload;
         }
     },    
     extraReducers:(builder)=>{
         // builder.addCase(getCategories.pending,(state)=>{
         //     state.isLoading=true;   
         // });
-        // builder.addCase(getCategories.fulfilled,(state,{payload})=>{
-        //     state.list=payload;
-        //     state.isLoading=false;  
-        // });
+        builder.addCase(createUser.fulfilled,(state,{payload})=>{
+            state.currentUser=payload;
+             
+        });
         // builder.addCase(getCategories.rejected,(state)=>{
         //     state.isLoading=false;  
         // });
     }
  })
-export const {addItemToCart} = UserSlice.actions
+export const {addItemToCart,toggleForm} = UserSlice.actions
  export default UserSlice.reducer;
