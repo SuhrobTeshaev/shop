@@ -27,6 +27,18 @@ async (payload,thunkAPI)=>{
         return thunkAPI.rejectWithValue(err);
     }
 });
+export const createUser = createAsyncThunk('users/createUser',
+async (payload,thunkAPI)=>{
+    try{
+        const res = await axios.post(`${BASE_URL}/users`, payload);
+        return res.data;    
+    } catch(err){
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+    }
+    
+}); 
+// тут остановились сверху (2.26.02 время видео)
 
  const UserSlice = createSlice({
     name:'user',

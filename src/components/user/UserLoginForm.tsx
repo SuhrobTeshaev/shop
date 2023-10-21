@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import s from './../../styles/User.module.css';
 import { createUser } from '../../features/user/UserSlice';
 import { useDispatch } from 'react-redux';
-export const UserSignupForm = ({closeForm}) => {
+export const UserLoginForm = ({closeForm}) => {
     const dispatch = useDispatch();
     const [values,setValues]=useState({
         name:'',
@@ -43,17 +43,6 @@ export const UserSignupForm = ({closeForm}) => {
             
             <div className={s.group}>
                 <input 
-                type="name" 
-                name='name' 
-                placeholder='Your name' 
-                value={values.name}
-                onChange={handleChange}
-                autoComplete='off'
-                required
-                 />
-            </div>
-            <div className={s.group}>
-                <input 
                 type="password" 
                 name='password' 
                 placeholder='Your password' 
@@ -62,21 +51,11 @@ export const UserSignupForm = ({closeForm}) => {
                 autoComplete='off'
                 required
                  />
-                 <div className={s.group}>
-                <input 
-                type="avatar" 
-                name='avatar' 
-                placeholder='Your avatar' 
-                value={values.avatar}
-                onChange={handleChange}
-                autoComplete='off'
-                required
-                 />
+                 
             </div>
-            </div>
-            <div className={s.link}>I already have an account</div>
+            <div className={s.link}>Create an account</div>
             <button type='submit' className={s.submit}>
-                Create an account
+                Login
             </button>
         </form>
     </div>
