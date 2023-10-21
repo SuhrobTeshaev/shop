@@ -1,43 +1,79 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import s from './../../styles/Products.module.css'
-const Products = ({title,style={},products=[],amount}) => {
-  const list = products.filter((_,i) =>i< amount)
-  return ( 
-    <section className={s.products}>
-     {title && <h2>{title}</h2>}
-     <div 
-     className={s.list}>
-     {list.map(({id,images,title,category:{name:cat},price})=>(
-      <Link 
-      to={`/products/${id}`} 
-      key={id} 
-      className={s.product}>
-        <div 
-        className={s.image}  
-        style={{backgroundImage:`url(${images[0]})`}}
-        />
-        <div className={s.wrapper}>
-          <h3 className={s.title}>{title}</h3>
-          <div className={s.cat}>{cat}</div>
-          <div className={s.info}>
-          <div className={s.prices}>
-          <div className={s.price}>{price}$</div>
-          <div className={s.oldPrice}>{Math.floor(price*0.8)}$
-          </div>
-          </div>
-          <div className={s.purchases}>
-            {Math.floor(Math.random()*20+1)} purchases
-          </div>
-          </div>
-        </div>
-      </Link>
-     )
+import React, { FC, useEffect, useState } from 'react'
+import s from './../../styles/Product.module.css';
+import { ROUTES } from '../../utils/routes';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addItemToCart } from '../../features/user/UserSlice';
 
-     )}
-     </div>
+// interface ProductProps {
+// size?:number,
+// images?:string,
+// id?:number,
+// title?:string,
+// price?:number,
+// description?:string
+// }
+const Sizes = [4,4.5,5];
+export const Product = (item) => {
+    const {images,id,title,price,description} = item;
+   const dispatch = useDispatch();
+    const currentImage = images[0];
+    const [currentImage,setCurrentImage]=useState();
+    const [currentSize,setCurrentSize]=useState();
+    useEffect(()=>{
+        if(!images.length) return;
+        setCurrentImage(images[0]);
+    }, [images]);
+    const addToCart = ()=>{
+        dispatch(addItemToCart(item))
+    }
+  return (
+    <section className={s.product}>
+        <div className={s.images}>
+            <div className={s.current}
+            style={{backgroundImage:`url(${currentImage})`}}
+            />
+            <div className={s['images-list']}>
+            {images.map((image)=>(
+                <div
+                key={id}
+                className={s.image}
+                style={{backgroundImage:`url(${currentImage})`}}
+                onClick={()=>setCurrentImage(image)} 
+                />
+            ))}
+            </div>
+        </div>
+        <div className={s.info}>
+            <h1 className={s.title}> {title}</h1>
+            <div className={price}>
+                {price}$
+            </div>
+            <div className={s.color}>
+                <span>Color</span>Green
+            </div>
+            <div className={s.sizes}>
+                <span>Sizes:</span>
+                <div className={s.list}>
+                {Sizes.map(size=>(
+                    <div onClick={()=>setCurrentSize(size)} 
+                    className={`${s.size} ${currentSize === size?s.active : ''}`} key={size}>
+                        {size}
+                    </div>
+                ))}
+                </div>
+            </div>
+            <p className={s.description}>{description}</p>
+            <div  className={s.actions}>
+                    <button onClick={addToCart} className={s.add} disabled={!currentSize}>Add to cart</button>
+                    <button className={s.favourite}>Add to favourite</button>
+
+            </div>
+            <div className={s.bottom}>
+                <div className={s.purchase}>19 people purchased</div>
+                <Link to={ROUTES.HOME}>Return to store</Link>
+            </div>
+        </div>
     </section>
-   );
+  )
 }
- 
-export default Products;

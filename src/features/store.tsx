@@ -2,15 +2,20 @@ import {  configureStore } from "@reduxjs/toolkit"
 import CategoriesSlice from "./categories/CategoriesSlice"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 import ProductsSlice from "./products/ProductsSlice"
+import { apiSlice } from "./api/apiSlice"
+import UserSlice from "./user/UserSlice"
 
 
 
 export const store = configureStore({
     reducer:{
         categories:CategoriesSlice,
-        products:ProductsSlice
+        products:ProductsSlice,
+        user:UserSlice,
+        [apiSlice.reducerPath]:apiSlice.reducer,
     },
-    // devtools:true,
+    middleware:(getMiddleware)=>getMiddleware().concat(apiSlice.middleware),
+    devtools:true,
 })
 
 export type AppDispatch = typeof store.dispatch;
