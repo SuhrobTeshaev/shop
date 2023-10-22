@@ -11,7 +11,7 @@ const Categories = ({title,products=[],amount}) => {
                     <Link to={`/categories/${id}`} key={id} className={s.item}>
                         <div
                         className={s.image}  
-                        style={{backgroundImage:`url(${images[0]})`}}
+                        style={{backgroundImage:`url($'картинка')`}}
                         />
                         <h3 className={s.title}>{name}</h3>
                     </Link>

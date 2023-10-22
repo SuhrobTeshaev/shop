@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useGetProductsQuery } from '../../features/api/apiSlice';
+import { useGetProductQuery } from '../../features/api/apiSlice';
 import { ROUTES } from '../../utils/routes';
 import { Product } from './Product';
 import Products from './Products';
 import { useDispatch } from 'react-redux';
-import { getReletedProducts } from '../../features/products/ProductsSlice';
+import { getRelatedProducts } from '../../features/products/ProductsSlice';
 import { useSelector } from 'react-redux';
 
 export const SingleProduct = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
-    const {data,isLoading,isFetching,isSuccess} = useGetProductsQuery({id});
+    const {data,isLoading,isFetching,isSuccess} = useGetProductQuery({id});
     const navigate = useNavigate();
     const {list,releted} = useSelector(({products})=>products)
     useEffect(()=>{
@@ -21,7 +21,7 @@ export const SingleProduct = () => {
     },[isLoading,isFetching,isSuccess]);
     useEffect(() =>{
         if(!data || !list.length) return;
-        dispatch(getReletedProducts(data.category.id))
+        dispatch(getRelatedProducts(data.category.id))
     },[data,dispatch,list.length])
   return !data? (
     <section className='preloader'>Loading...</section>

@@ -27,18 +27,34 @@ async (payload,thunkAPI)=>{
         return thunkAPI.rejectWithValue(err);
     }
 });
-// export const createUser = createAsyncThunk('users/createUser',
-// async (payload,thunkAPI)=>{
-//     try{
-//         const res = await axios.post(`${BASE_URL}/users`, payload);
-//         return res.data;    
-//     } catch(err){
-//         console.log(err);
-//         return thunkAPI.rejectWithValue(err);
-//     }
+export const loginUser = createAsyncThunk('users/loginUser',
+async (payload,thunkAPI)=>{
+    try{
+        const res = await axios.post(`${BASE_URL}/auth/login`, payload);
+        const login = await  axios.post(`${BASE_URL}/auth/profile`,{
+            headers:{
+                "Authorization":`Bearer ${res.data.access_token}`
+            }
+        });
+        return login.data;    
+    } catch(err){
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+    }
     
-// }); 
-// тут остановились сверху (2.26.02 время видео)
+});
+export const updateUser = createAsyncThunk('users/updateUser',
+async (payload,thunkAPI)=>{
+    try{
+        const res = await axios.put(`${BASE_URL}/users/${payload.id}`, payload);
+        return res.data;    
+    } catch(err){
+        console.log(err);
+        return thunkAPI.rejectWithValue(err);
+    }
+}); 
+const addCurrentUser = (state,{payload})=>{
+    state.currentUser=payload;};
 
  const UserSlice = createSlice({
     name:'user',
@@ -69,20 +85,23 @@ async (payload,thunkAPI)=>{
         },
         toggleForm:(state,{payload})=>{
             state.showForm = payload;
-        }
+        },
+        toggleFormType:(state,{payload})=>{
+            state.formType = payload;
+        },
     },    
     extraReducers:(builder)=>{
         // builder.addCase(getCategories.pending,(state)=>{
         //     state.isLoading=true;   
         // });
-        builder.addCase(createUser.fulfilled,(state,{payload})=>{
-            state.currentUser=payload;
-             
-        });
+        builder.addCase(createUser.fulfilled,addCurrentUser);
+        builder.addCase(loginUser.fulfilled, addCurrentUser);
+        builder.addCase(updateUser.fulfilled, addCurrentUser);
+
         // builder.addCase(getCategories.rejected,(state)=>{
         //     state.isLoading=false;  
         // });
     }
  })
-export const {addItemToCart,toggleForm} = UserSlice.actions
+export const {addItemToCart,toggleForm,toggleFormType} = UserSlice.actions
  export default UserSlice.reducer;

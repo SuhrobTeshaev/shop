@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import s from './../../styles/User.module.css';
-import { createUser } from '../../features/user/UserSlice';
+// import { createUser } from '../../features/user/UserSlice';
 import { useDispatch } from 'react-redux';
-export const UserSignupForm = ({closeForm}) => {
+
+export const UserSignupForm = ({toggleCurrentFormType,closeForm}) => {
     const dispatch = useDispatch();
     const [values,setValues]=useState({
         name:'',
@@ -11,15 +12,17 @@ export const UserSignupForm = ({closeForm}) => {
         avatar:''
     });
     const handleChange = ({target:{value,name}}) =>{
-        setValues({...values,[name]:value});
+        setValues({...values, [name]:value});
     };
+    
     const handleSubmit = (e) =>{
         e.prevetDefault();
         const isEmpty = Object.values(values).some(val=>!val);
-        if(isEmpty) return;
+        if(!isEmpty) return;
         dispatch(createUser(values)); 
         closeForm();
     }
+    
   return (
     <div className={s.wrapper}>
         <div className={s.close} onClick={closeForm}>
@@ -74,8 +77,8 @@ export const UserSignupForm = ({closeForm}) => {
                  />
             </div>
             </div>
-            <div className={s.link}>I already have an account</div>
-            <button type='submit' className={s.submit}>
+            <div className={s.link} onClick={()=>toggleCurrentFormType('login')}>I already have an account</div>
+            <button type='submit' className={s.submit} onClick={handleSubmit}>
                 Create an account
             </button>
         </form>

@@ -39,11 +39,11 @@ async (arg,thunkAPI)=>{
     },
     reducers:{
         filterByPrice: (state,{payload})=>{
-            state.filtered = state.list.filter(({price})=>price <payload);
+            state.filtered = state.list.filter(({price})=>price < payload);
         },
         getRelatedProducts:(state,{payload})=>{
-            const list = state.list.filter(({category:{id}})=>id === payload);
-            // state.related = shuffle(list);
+            let list = state.list.filter(({category:{id}})=>id === payload);
+            state.related = list;
         },
     },    
     extraReducers:(builder)=>{

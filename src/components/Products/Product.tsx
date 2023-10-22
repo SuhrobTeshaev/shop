@@ -5,21 +5,26 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addItemToCart } from '../../features/user/UserSlice';
 
-// interface ProductProps {
-// size?:number,
-// images?:string,
-// id?:number,
-// title?:string,
-// price?:number,
-// description?:string
-// }
+interface ProductProps {
+size:number,
+item:any,
+images:any,
+id:number,
+title:string,
+price:number,
+description:string,
+currentImage:any
+onClick:void
+
+}
 const Sizes = [4,4.5,5];
-export const Product = (item) => {
-    const {images,id,title,price,description} = item;
-   const dispatch = useDispatch();
-    const currentImage = images[0];
+export const Product:FC<ProductProps> = (item) => {
+    const {images,id,title,price,description,size,onClick} = item;
+    const dispatch=useDispatch();
     const [currentImage,setCurrentImage]=useState();
     const [currentSize,setCurrentSize]=useState();
+    
+   
     useEffect(()=>{
         if(!images.length) return;
         setCurrentImage(images[0]);
@@ -31,8 +36,7 @@ export const Product = (item) => {
     <section className={s.product}>
         <div className={s.images}>
             <div className={s.current}
-            style={{backgroundImage:`url(${currentImage})`}}
-            />
+            style={{backgroundImage:`url(${currentImage})`}}/>
             <div className={s['images-list']}>
             {images.map((image)=>(
                 <div
@@ -46,9 +50,7 @@ export const Product = (item) => {
         </div>
         <div className={s.info}>
             <h1 className={s.title}> {title}</h1>
-            <div className={price}>
-                {price}$
-            </div>
+            <div className={s.price}>{price}$</div>
             <div className={s.color}>
                 <span>Color</span>Green
             </div>
@@ -56,7 +58,8 @@ export const Product = (item) => {
                 <span>Sizes:</span>
                 <div className={s.list}>
                 {Sizes.map(size=>(
-                    <div onClick={()=>setCurrentSize(size)} 
+                    <div
+                    //  onClick={() => setCurrentSize(size)} 
                     className={`${s.size} ${currentSize === size?s.active : ''}`} key={size}>
                         {size}
                     </div>

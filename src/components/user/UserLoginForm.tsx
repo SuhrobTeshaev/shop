@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import s from './../../styles/User.module.css';
-import { createUser } from '../../features/user/UserSlice';
+import { loginUser } from '../../features/user/UserSlice';
 import { useDispatch } from 'react-redux';
-export const UserLoginForm = ({closeForm}) => {
+export const UserLoginForm = ({toggleCurrentFormType,closeForm}) => {
     const dispatch = useDispatch();
     const [values,setValues]=useState({
         name:'',
@@ -15,9 +15,9 @@ export const UserLoginForm = ({closeForm}) => {
     };
     const handleSubmit = (e) =>{
         e.prevetDefault();
-        const isEmpty = Object.values(values).some(val=>!val);
-        if(isEmpty) return;
-        dispatch(createUser(values)); 
+        const isNotEmpty = Object.values(values).every(val=>!val);
+        if(isNotEmpty) return;
+        dispatch(loginUser(values)); 
         closeForm();
     }
   return (
@@ -26,7 +26,7 @@ export const UserLoginForm = ({closeForm}) => {
             тут будет свг иконка close
         </div>
         <div className={s.title}>
-            Sign Up
+            log In
         </div>
         <form className={s.form}>
             <div className={s.group}>
@@ -53,7 +53,7 @@ export const UserLoginForm = ({closeForm}) => {
                  />
                  
             </div>
-            <div className={s.link}>Create an account</div>
+            <div className={s.link} onClick={()=> toggleCurrentFormType('signup')}>Create an account</div>
             <button type='submit' className={s.submit}>
                 Login
             </button>

@@ -7,7 +7,8 @@ import { BASE_URL } from "../../utils/constant";
 export interface Categories {
     name:string,
     id:number,
-    devtools:boolean
+    devtools:boolean,
+
 }
 
 export interface CategoriesState {
@@ -33,7 +34,8 @@ async (arg,thunkAPI)=>{
     name:'categories',
     initialState:{
         list:[],
-        isLoading:false
+        isLoading:false,
+        categories:[]
     },
     reducers:{},    
     extraReducers:(builder)=>{

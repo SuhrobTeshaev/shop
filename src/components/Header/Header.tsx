@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
 import s from './Header.module.css';
 import { useSelector } from "react-redux";
@@ -7,9 +7,11 @@ import { toggleForm } from "../../features/user/UserSlice";
 import { useEffect, useState } from "react";
 const Header = () => {
     const dispatch=useDispatch();
+    const navigate=useNavigate();
+
     
     const {currentUser} = useSelector(({user})=>user);
-    const [values,setValues]= useState({name:'Guest', avatar:AVATAR});
+    const [values,setValues]= useState({name:'Guest', avatar:''});
     useEffect(()=>{
         if(!currentUser) return;
         setValues(currentUser)
@@ -20,7 +22,7 @@ const Header = () => {
     return ( 
         <div className={s.header}>
            <div className={s.logo}>
-        <Link to={ROUTES.HOME}>
+        <Link to={ROUTES.PROFILE}>
         <img src="ссылка на логотип" alt="#" />
          </Link>
            </div>

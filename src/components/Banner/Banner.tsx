@@ -12,7 +12,7 @@ const Banner = () => {
             </div>
             <div
              className={s.right}
-             style={{backgroundImage:`url(${BannerIMG[0]})`}}
+             style={{backgroundImage:`url($'будет ссфлка на банер')`}}
              >
                 <p className={s.discount}>
                 save up to <span>50%</span>off
