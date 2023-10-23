@@ -81,6 +81,7 @@ export const Profile = () => {
      <button 
      type='submit'
     className={s.submit}
+    
      >Update</button>
      </form>
         }

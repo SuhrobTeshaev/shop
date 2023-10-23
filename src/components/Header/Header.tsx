@@ -8,14 +8,21 @@ import { useEffect, useState } from "react";
 const Header = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();
-
+    const [searchValue,setSearchValue]=useState('');
     
-    const {currentUser} = useSelector(({user})=>user);
+    const {currentUser,cart} = useSelector(({user})=>user);
     const [values,setValues]= useState({name:'Guest', avatar:''});
+    const {data,isLoading} = useGetProductsQuery({title:searchValue});
+
     useEffect(()=>{
         if(!currentUser) return;
         setValues(currentUser)
     },[currentUser]);
+
+    const handleSearchValue =({target:{value}})=>{
+        setSearchValue(value);
+    }
+
     const handleClick = () =>{
         if(!currentUser) dispatch(toggleForm(true))
     }
@@ -37,10 +44,34 @@ const Header = () => {
                 <svg>ссылка на иконьку</svg>
             </div>
             <div className={s.input}>
-            <input type="search" placeholder="Поиск товаров " autoComplete="off" />
+            <input type="search" 
+            placeholder="Поиск товаров "
+             autoComplete="off" />
+             onChange={handleSearchValue}
+             value={searchValue}
             </div>
             
-            <div className="box"></div>
+            {searchValue && <div className="box">
+                {isLoading?'Loading': !data.length?'No results':(
+                    data.map(({title,image,id})=>{
+                        return (
+                            <Link 
+                            key={id}
+                            onClick={()=> setSearchValue('')}
+                             to={`/products/${id}`}>
+                                <div 
+                                className={s.image}
+                                style={{backgroundImage:`url(тут будет ссылка на img)`}}
+                                />
+                                <div
+                                className={s.title}>
+                                    {title}
+                                </div>
+                            </Link>
+                        )
+                    })
+                )}
+                </div>}
            </form>
            <div className={s.account}>
             
@@ -50,7 +81,8 @@ const Header = () => {
            
             <Link to={ROUTES.CART} className={s.cart}>
                Корзина 
-               <span className={s.count}>2</span>
+               {!!cart.length && <span className={s.count}>{cart.length}</span>}
+               
             </Link>
             
            
