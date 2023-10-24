@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import s from './../../styles/User.module.css';
 import { loginUser } from '../../features/user/UserSlice';
 import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../features/store';
 export const UserLoginForm = ({toggleCurrentFormType,closeForm}) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [values,setValues]=useState({
         name:'',
         email:'',
@@ -13,13 +14,13 @@ export const UserLoginForm = ({toggleCurrentFormType,closeForm}) => {
     const handleChange = ({target:{value,name}}) =>{
         setValues({...values,[name]:value});
     };
-    const handleSubmit = (e) =>{
-        e.prevetDefault();
-        const isNotEmpty = Object.values(values).every(val=>!val);
-        if(isNotEmpty) return;
-        dispatch(loginUser(values)); 
-        closeForm();
-    }
+    // const handleSubmit = (e) =>{
+    //     e.prevetDefault();
+    //     const isNotEmpty = Object.values(values).every(val=>val);
+    //     if(!isNotEmpty) return;
+    //     dispatch(loginUser(values)); 
+    //     closeForm();
+    // }
   return (
     <div className={s.wrapper}>
         <div className={s.close} onClick={closeForm}>

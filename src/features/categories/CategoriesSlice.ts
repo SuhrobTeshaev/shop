@@ -14,7 +14,7 @@ export interface Categories {
 export interface CategoriesState {
     categories:Categories[]
 }
-const initialState: CategoriesState = {
+ export const initialState: CategoriesState = {
     categories:[]
 }
 

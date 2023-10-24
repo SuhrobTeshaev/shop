@@ -2,12 +2,16 @@ import React,{useEffect,useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetProductsQuery } from './../../features/api/apiSlice';
 import s from './../../styles/Category.module.css';
-import { div } from 'ts-quantities/dist/quantities/operators';
 import Products from '../Products/Products';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../features/store';
+
+ 
 export const Category = () => {
-    const {id} =useParams();
-    const {list} =useSelector(({categories})=>categories);
+    const dispatch = useDispatch<AppDispatch>();
+    const {id,_items} = useParams();
+    const {list} = useSelector(({categories}) => categories);
 
     const defaultValues ={
         title:'',
@@ -21,13 +25,21 @@ export const Category = () => {
         offset:0,
         ...defaultValues,
     }
-    const [end,setEnd]= useState(false);
+    const [isEnd,setEnd]= useState(false);
     const [cat,setCat]= useState(null);
     const [items,setItems]= useState([]);
     const [values,setValues]= useState(defaultValues);
     const [params,setParams] = useState(defaultParams);
 
-    const {data,isLoading,isSuccess} = useGetProductsQuery(params);
+    const {data = [],isLoading,isSuccess} = useGetProductsQuery(params);
+    useEffect(() => {
+        if(!isLoading) return;
+
+        if(!data.length) return setEnd(true);
+    
+    setItems((_items) => [..._items,...data]);
+
+    },[data,isLoading]); 
 
     useEffect (()=>{
         if(!id) return;
@@ -37,21 +49,15 @@ export const Category = () => {
         setParams({...defaultParams,categoryId:id})
     },[id]);
 
-    useEffect(()=>{
-        if(!isLoading) return;
-        if(!data.length) return setEnd(true);
     
-    setItems((_items)=>[..._items, ...data]);
-
-    },[data,isLoading]);
 
     useEffect(()=>{
         if(!id || !list.length) return;
-        const category = list.find((item) => item.id === id *  1)
+        const category = list.find((item) => item.id === id * 1);
         setCat(category);
-    },[list,id])
+    },[list,id]);
 
-    const handleChange = ({target:{value,name}})=>{
+    const handleChange = ({target: { value,name } } )=>{
         setValues({...values,[name]:value});
     };
 
@@ -68,7 +74,7 @@ export const Category = () => {
     }
   return (
     <section className={s.wrapper}>
-<h2 className={s.title}>{cat?.name}</h2>
+<h2 className={s.title}>{cat}</h2>
 <form className={s.filters} onSubmit={handleSubmit}>
     <div className={s.filter}>
     <input
@@ -112,7 +118,7 @@ export const Category = () => {
 ):(
     <Products title='' products={items} style={{padding:0}} amount={items.length}/>
 )}
-  {end && (
+  {isEnd && (
       <div className={s.more}>
       <button
        onClick={()=>setParams({ ...params, offset:params.offset + params.limit})}

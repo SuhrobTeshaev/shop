@@ -1,34 +1,34 @@
-import React,{useEffect} from 'react'
-import s from './../../styles/Profile.module.css';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import React,{useEffect,useState} from 'react'
+import { useDispatch,useSelector  } from 'react-redux';
 import { updateUser } from '../../features/user/UserSlice';
+import s from './../../styles/Profile.module.css';
+import { AppDispatch } from '../../features/store';
 
 export const Profile = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const {currentUser} = useSelector(({user})=>user);
-    const [values,setValues]=useState({
+    const [values,setValues] = useState({
         name:'',
         email:'',
         password:'',
-        avatar:''
+        avatar:'',
+        
     });
 
-    
     useEffect(()=>{
         if(!currentUser) return;
-        setValues(currentUser)
+        setValues(currentUser);
     },[currentUser]);
-    const handleChange = ({target:{value,name}}) =>{
+
+    const handleChange = ({target:{value,name}}) => {
         setValues({...values, [name]:value});
     };
-    const handleSubmit = (e) =>{
-        e.prevetDefault();
-        const isEmpty = Object.values(values).some(val=>!val);
-        if(!isEmpty) return;
-        dispatch(updateUser(values)); 
-        
-    }
+    // const handleSubmit = (e) => {
+    //     e.prevetDefault();
+    //     const isNotEmpty = Object.values(values).every(val => val);
+    //     if(!isNotEmpty) return;
+    //     dispatch(updateUser(values)); 
+    // };
   return (
     <section className={s.profile}>
         {!currentUser? <span>You need to log in</span>:
@@ -81,7 +81,7 @@ export const Profile = () => {
      <button 
      type='submit'
     className={s.submit}
-    
+    // onClick={handleSubmit}
      >Update</button>
      </form>
         }
