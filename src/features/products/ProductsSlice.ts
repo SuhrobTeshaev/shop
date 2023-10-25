@@ -43,7 +43,7 @@ async (_,thunkAPI)=>{
         },
         getRelatedProducts:(state,{payload})=>{
             let list = state.list.filter(({category:{id}})=> id === payload);
-            state.related = shuffle(list);
+            // state.related = shuffle(list);
         },
     },    
     extraReducers:(builder)=>{
