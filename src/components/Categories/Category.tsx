@@ -9,10 +9,11 @@ import { AppDispatch } from '../../features/store';
 
  
 export const Category = () => {
+    
     const dispatch = useDispatch<AppDispatch>();
-    const {id,_items} = useParams();
+    const {id} = useParams();
     const {list} = useSelector(({categories}) => categories);
-
+    
     const defaultValues ={
         title:'',
         price_min:0,
@@ -25,11 +26,11 @@ export const Category = () => {
         offset:0,
         ...defaultValues,
     }
-    const [isEnd,setEnd]= useState(false);
-    const [cat,setCat]= useState(null);
-    const [items,setItems]= useState([]);
-    const [values,setValues]= useState(defaultValues);
-    const [params,setParams] = useState(defaultParams);
+    const [isEnd,setEnd]= useState<any>(false);
+    const [cat,setCat]= useState<any>(null);
+    const [items,setItems]= useState<any>([]);
+    const [values,setValues]= useState<any>(defaultValues);
+    const [params,setParams] = useState<any>(defaultParams);
 
     const {data = [],isLoading,isSuccess} = useGetProductsQuery(params);
     useEffect(() => {
@@ -52,11 +53,15 @@ export const Category = () => {
     
 
     useEffect(()=>{
-        if(!id || !list.length) return;
-        const category = list.find((item) => item.id === id * 1);
+        if(!id || !list.length) return
+        const category = list.find(
+            (item) => 
+            item.id);
         setCat(category);
+        
     },[list,id]);
 
+    
     const handleChange = ({target: { value,name } } )=>{
         setValues({...values,[name]:value});
     };
@@ -66,13 +71,15 @@ export const Category = () => {
         setItems([]);
         setEnd(false);
         setParams({ ...defaultParams, ...values})
-    }
+    };
     const handleReset = () =>{
         setValues(defaultValues);
         setParams(defaultParams);
         setEnd(false);
-    }
+    };
+    
   return (
+    
     <section className={s.wrapper}>
 <h2 className={s.title}>{cat}</h2>
 <form className={s.filters} onSubmit={handleSubmit}>

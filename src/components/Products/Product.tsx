@@ -22,7 +22,7 @@ export const Product:FC<ProductProps> = (item) => {
     const {images,id,title,price,description,size,onClick} = item;
     const dispatch=useDispatch();
     const [currentImage,setCurrentImage]=useState();
-    const [currentSize,setCurrentSize]=useState();
+    const [currentSize,setCurrentSize]=useState<number>();
     
    
     useEffect(()=>{
@@ -59,7 +59,7 @@ export const Product:FC<ProductProps> = (item) => {
                 <div className={s.list}>
                 {Sizes.map(size=>(
                     <div
-                    //  onClick={() => setCurrentSize(size)} 
+                     onClick={() => setCurrentSize(size)} 
                     className={`${s.size} ${currentSize === size?s.active : ''}`} key={size}>
                         {size}
                     </div>

@@ -12,11 +12,9 @@ import { filterByPrice } from '../../features/products/ProductsSlice';
 const Home = () => {
  
   const dispatch=useDispatch();
-  const {
-    products:{list,filtered},
-    categories,
-  } = useSelector(({state})=>state);
-  
+  const { products:{list,filtered}} = useSelector(({state})=> state.products);
+  const {categories} = useSelector(({state})=> state.categories.list);
+ 
  
   useEffect(()=>{
     if(!list.length)return;
@@ -24,7 +22,7 @@ const Home = () => {
     dispatch(filterByPrice(100));
   },[dispatch,list.length]);
     return (
-      
+
       <>
       <Poster/>
        <Products products={list}  amount={5} title='Trending'/>

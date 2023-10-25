@@ -13,15 +13,15 @@ export interface Products {
 export interface ProductsState {
     products:Products[]
 }
-const initialState: ProductsState = {
+export const initialState: ProductsState = {
     products:[]
 }
 
 
 export const getProducts = createAsyncThunk('categories/getCategories',
-async (arg,thunkAPI)=>{
+async (_,thunkAPI)=>{
     try{
-        const res = await axios(`${BASE_URL}/categories`);
+        const res = await axios(`${BASE_URL}/products`);
         return res.data;    
     } catch(err){
         console.log(err);
@@ -42,20 +42,20 @@ async (arg,thunkAPI)=>{
             state.filtered = state.list.filter(({price})=>price < payload);
         },
         getRelatedProducts:(state,{payload})=>{
-            let list = state.list.filter(({category:{id}})=>id === payload);
-            state.related = list;
+            let list = state.list.filter(({category:{id}})=> id === payload);
+            state.related = shuffle(list);
         },
     },    
     extraReducers:(builder)=>{
         builder.addCase(getProducts.pending,(state)=>{
-            state.isLoading=true;   
+            state.isLoading = true;   
         });
         builder.addCase(getProducts.fulfilled,(state,{payload})=>{
-            state.list=payload;
-            state.isLoading=false;  
+            state.list = payload;
+            state.isLoading = false;  
         });
         builder.addCase(getProducts.rejected,(state)=>{
-            state.isLoading=false;  
+            state.isLoading = false;  
         });
     }
  })

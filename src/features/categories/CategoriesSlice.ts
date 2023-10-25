@@ -15,7 +15,8 @@ export interface CategoriesState {
     categories:Categories[]
 }
  export const initialState: CategoriesState = {
-    categories:[]
+    categories:[],
+
 }
 
 
