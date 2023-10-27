@@ -7,16 +7,15 @@ import { SingleCategory } from "../Categories/SingleCategory";
 import { Cart } from "../Cart/Cart";
 
 const AppRoutes = () => {
-    return ( 
-        <Routes>
-            <Route index element={<Home/>}/>
-            <Route path={ROUTES.PRODUCTS} element={<SingleProduct/>}/>
-            <Route path={ROUTES.PROFILE} element={<Profile/>}/>
-            <Route path={ROUTES.CATEGORY} element={<SingleCategory/>}/>
-            <Route path={ROUTES.CART} element={<Cart/>}/>
+  return (
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path={ROUTES.PRODUCTS} element={<SingleProduct />} />
+      <Route path={ROUTES.PROFILE} element={<Profile />} />
+      <Route path={ROUTES.CATEGORY} element={<SingleCategory />} />
+      <Route path={ROUTES.CART} element={<Cart />} />
+    </Routes>
+  );
+};
 
-        </Routes>
-     );
-}
- 
 export default AppRoutes;
