@@ -14,20 +14,20 @@ export const UserLoginForm = ({ toggleCurrentFormType, closeForm }) => {
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const isNotEmpty = Object.values(values).every((val) => val);
-    if (!isNotEmpty) return;
-    dispatch(loginUser(values));
-    closeForm();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const isNotEmpty = Object.values(values).every((val) => val);
+  //   if (!isNotEmpty) return;
+  //   dispatch(loginUser(values));
+  //   closeForm();
+  // };
   return (
     <div className={s.wrapper}>
       <div className={s.close} onClick={closeForm}>
         тут будет свг иконка close
       </div>
       <div className={s.title}>log In</div>
-      <form className={s.form} onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={()=>{}}>
         <div className={s.group}>
           <input
             type="email"

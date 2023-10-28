@@ -16,13 +16,13 @@ export const UserSignupForm = ({ toggleCurrentFormType, closeForm }) => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const isEmpty = Object.values(values).some((val) => !val);
-    if (!isEmpty) return;
-    dispatch(createUser(values));
-    closeForm();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const isEmpty = Object.values(values).some((val) => !val);
+  //   if (!isEmpty) return;
+  //   dispatch(createUser(values));
+  //   closeForm();
+  // };
 
   return (
     <div className={s.wrapper}>
@@ -79,7 +79,7 @@ export const UserSignupForm = ({ toggleCurrentFormType, closeForm }) => {
         <div className={s.link} onClick={() => toggleCurrentFormType("login")}>
           I already have an account
         </div>
-        <button type="submit" className={s.submit} onClick={handleSubmit}>
+        <button type="submit" className={s.submit} >
           Create an account
         </button>
       </form>

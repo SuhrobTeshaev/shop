@@ -50,7 +50,6 @@ export const Category = () => {
     setParams({ ...defaultParams, categoryId: id });
     
   }, [id]);
-
   useEffect(() => {
     if (!id || !list.length) return;
     const category = list.find(({ item }) => item.id === parseInt(id));

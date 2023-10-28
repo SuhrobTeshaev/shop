@@ -9,11 +9,11 @@ export const Profile = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { currentUser } = useSelector(({ user }) => user);
   const [values, setValues] = useState({
-    id:1,
     name: '',
     email: '',
     password: '',
-    avatar:''
+    avatar:'',
+    
   });
 
   useEffect(() => {
@@ -24,21 +24,21 @@ export const Profile = () => {
   const handleChange = ({ target: { value, name } }) => {
     setValues({ ...values, [name]: value });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const isNotEmpty = Object.values(values).every((val) => val);
-    if (!isNotEmpty) return;
-    dispatch(updateUser(values));
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const isNotEmpty = Object.values(values).every((val) => val);
+  //   if (!isNotEmpty) return;
+  //   dispatch(updateUser(values));
+  // };
   return (
     <section className={s.profile}>
       {!currentUser ? (
         <span>You need to log in</span>
       ) : (
-        <form className={s.form} onSubmit={handleSubmit}>
+        <form className={s.form} onSubmit={()=>{}}>
           <div className={s.group}>
             <input
-              type="text"
+              type="email"
               name="email"
               placeholder="Your email"
               value={values.email}
@@ -50,7 +50,7 @@ export const Profile = () => {
 
           <div className={s.group}>
             <input
-              type="text"
+              type="name"
               name="name"
               placeholder="Your name"
               value={values.name}
@@ -61,7 +61,7 @@ export const Profile = () => {
           </div>
           <div className={s.group}>
             <input
-              type="number"
+              type="password"
               name="password"
               placeholder="Your password"
               value={values.password}
@@ -72,7 +72,7 @@ export const Profile = () => {
           </div>
           <div className={s.group}>
             <input
-              type="text"
+              type="avatar"
               name="avatar"
               placeholder="Your avatar"
               value={values.avatar}

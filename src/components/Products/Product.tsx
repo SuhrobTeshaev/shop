@@ -7,20 +7,19 @@ import { addItemToCart } from "../../features/user/UserSlice";
 
 interface ProductProps {
   size: number;
-  item: any;
-  images: any;
+  images:[];
   id: number;
   title: string;
   price: number;
   description: string;
-  currentImage: any;
-  onClick: void;
+  currentImage: string;
+  onClick: ()=> void;
 }
 const Sizes = [4, 4.5, 5];
-export const Product: FC<ProductProps> = ({item}) => {
+export const Product: FC<ProductProps> = (item) => {
   const { images, id, title, price, description, size, onClick } = item;
   const dispatch = useDispatch();
-  const [currentImage, setCurrentImage] = useState();
+  const [currentImage, setCurrentImage] = useState('');
   const [currentSize, setCurrentSize] = useState<number>();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export const Product: FC<ProductProps> = ({item}) => {
     setCurrentImage(images[0]);
   }, [images]);
 
-  const addToCart = () => {
+  const addToCart = (item) => {
     dispatch(addItemToCart(item));
   };
 
@@ -37,14 +36,14 @@ export const Product: FC<ProductProps> = ({item}) => {
       <div className={s.images}>
         <div
           className={s.current}
-          style={{ backgroundImage: `url(${currentImage})` }}
+          style={{ backgroundImage: `url('${currentImage}')` }}
         />
         <div className={s["images-list"]}>
           {images.map((image) => (
             <div
               key={id}
               className={s.image}
-              style={{ backgroundImage: `url(${currentImage})` }}
+              style={{ backgroundImage: `url('${image}')` }}
               onClick={() => setCurrentImage(image)}
             />
           ))}
@@ -59,11 +58,11 @@ export const Product: FC<ProductProps> = ({item}) => {
         <div className={s.sizes}>
           <span>Sizes:</span>
           <div className={s.list}>
-            {Sizes.map((size) => (
+            {Sizes.map((size,index) => (
               <div
                 onClick={() => setCurrentSize(size)}
                 className={`${s.size} ${currentSize === size ? s.active : ""}`}
-                key={size}
+                key={index}
               >
                 {size}
               </div>

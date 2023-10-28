@@ -47,12 +47,6 @@ export const getProducts = createAsyncThunk(
 const ProductsSlice = createSlice({
   name: "products",
   initialState,
-  // :{
-  //     list: [] as Products[],
-  // filtered: [] as Products[],
-  // related: [] as Products[],
-  // isLoading: false
-  // },
   reducers: {
     filterByPrice: (state, { payload }) => {
       state.filtered = state.list.filter(({ price }) => price < payload);

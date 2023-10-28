@@ -18,9 +18,9 @@ export const SingleProduct = () => {
     if (!isFetching && !isLoading && !isSuccess) {
       navigate(ROUTES.HOME);
     }
-    if (!data && data.category) return;
+    if (!data || data.category) return;
     dispatch(getRelatedProducts(data.category.id));
-  }, [isLoading, isFetching, isSuccess, data, dispatch, list.length]);
+  }, [isLoading, isFetching, isSuccess, data, dispatch]);
 
   return !data ? (
     <section className="preloader">Loading...</section>
