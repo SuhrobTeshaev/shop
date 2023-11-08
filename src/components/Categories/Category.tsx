@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, {FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetProductsQuery } from "./../../features/api/apiSlice";
 import s from "./../../styles/Category.module.css";
 import Products from "../Products/Products";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../features/store";
 
-export const Category = () => {
-  const dispatch = useDispatch<AppDispatch>();
+ interface CategoryProps  {
+offset?:number,
+limit?:number,
+price_min?:number,
+price_max?:number,
+categoryId?:string,
+title?:string
+}
+
+export const Category:FC<CategoryProps> = ({offset,limit}) => {
   const { id } = useParams();
   const { list } = useSelector(({ categories }) => categories);
 
@@ -31,9 +37,11 @@ export const Category = () => {
     price_min: number;
     price_max: number;
   }>(defaultValues);
+
   const [params, setParams] = useState(defaultParams);
 
   const { data = [], isLoading, isSuccess } = useGetProductsQuery(params);
+
   useEffect(() => {
     if (!isLoading) return;
 
@@ -50,9 +58,10 @@ export const Category = () => {
     setParams({ ...defaultParams, categoryId: id });
     
   }, [id]);
+
   useEffect(() => {
     if (!id || !list.length) return;
-    const category = list.find(({ item }) => item.id === parseInt(id));
+    const category = list.find(( item ) => item.id === parseInt(id));
     setCat(category);
   }, [list, id]);
 
@@ -109,7 +118,7 @@ export const Category = () => {
       </form>
       {isLoading ? (
         <div className="preloader">Loading...</div>
-      ) : !isSuccess || !data.length ? (
+      ) : !isSuccess || !items.length ? (
         <div className={s.back}>
           <span>No result</span>
           <button onClick={handleReset}>Reset</button>

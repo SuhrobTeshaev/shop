@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
 
@@ -49,9 +49,9 @@ export const loginUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "users/updateUser",
-  async ({ payload }: PayloadAction<User>, thunkAPI) => {
+  async ( payload, thunkAPI) => {
     try {
-      const res = await axios.put(`${BASE_URL}/users/${payload.id}`, payload);
+      const res = await axios.put(`${BASE_URL}/users/${payload}`, payload);
       return res.data;
     } catch (err) {
       console.log(err);
@@ -60,7 +60,7 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-const addCurrentUser = (state, { payload }: PayloadAction<User>) => {
+const addCurrentUser = (state, { payload }) => {
   state.currentUser = payload;
 };
 
@@ -74,32 +74,32 @@ const UserSlice = createSlice({
     showForm: false,
   },
   reducers: {
-    addItemToCart: (state, action: PayloadAction<User>) => {
+    addItemToCart: (state, {payload}) => {
       let newCart = [...state.cart];
-      const found = state.cart.find(({ id }) => id === action.payload.id);
+      const found = state.cart.find(({ id }) => id === payload.id);
 
       if (found) {
         newCart = newCart.map((item) => {
-          return item.id === action.payload.id
+          return item.id === payload.id
             ? {
                 ...item,
-                quantity: action.payload.quantity || item.quantity + 1,
+                quantity: payload.quantity || item.quantity + 1,
               }
             : item;
         });
       } else {
-        newCart.push({ ...action.payload, quantity: 1 });
+        newCart.push({ ...payload, quantity: 1 });
       }
       state.cart = newCart;
     },
-    removeItemFromCart: (state, action: PayloadAction<number>) => {
-      state.cart = state.cart.filter(({ id }) => id !== action.payload);
+    removeItemFromCart: (state, {payload}) => {
+      state.cart = state.cart.filter(({ id }) => id !== payload);
     },
-    toggleForm: (state, action: PayloadAction<boolean>) => {
-      state.showForm = action.payload;
+    toggleForm: (state, {payload}) => {
+      state.showForm = payload;
     },
-    toggleFormType: (state, action: PayloadAction<string>) => {
-      state.formType = action.payload;
+    toggleFormType: (state, {payload}) => {
+      state.formType = payload;
     },
   },
   extraReducers: (builder) => {

@@ -1,8 +1,10 @@
 import React from "react";
 import s from "./../../styles/Categories.module.css";
 import { Link } from "react-router-dom";
+
 const Categories = ({ title, products = [], amount }) => {
   const list = products.filter((_, i) => i < amount);
+  
   return (
     <section className={s.section}>
       <h2>{title}</h2>
