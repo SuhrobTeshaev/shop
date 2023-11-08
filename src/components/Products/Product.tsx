@@ -4,11 +4,10 @@ import { ROUTES } from "../../utils/routes";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../features/user/UserSlice";
+import { strict } from "assert";
 
 interface ProductProps {
-  size: number;
-  images:[];
-  id: number;
+  images:[''];
   title: string;
   price: number;
   description: string;
@@ -17,13 +16,16 @@ interface ProductProps {
 }
 const Sizes = [4, 4.5, 5];
 export const Product: FC<ProductProps> = (item) => {
-  const { images, id, title, price, description, size, onClick } = item;
+  const { images,  title, price, description } = item;
+
   const dispatch = useDispatch();
+
   const [currentImage, setCurrentImage] = useState('');
-  const [currentSize, setCurrentSize] = useState<number>();
+  const [currentSize, setCurrentSize] = useState<number|null>(null);
 
   useEffect(() => {
     if (!images.length) return;
+
     setCurrentImage(images[0]);
   }, [images]);
 
@@ -36,14 +38,14 @@ export const Product: FC<ProductProps> = (item) => {
       <div className={s.images}>
         <div
           className={s.current}
-          style={{ backgroundImage: `url('${currentImage}')` }}
+          style={{ backgroundImage: `url(${currentImage})` }}
         />
         <div className={s["images-list"]}>
-          {images.map((image) => (
+          {images.map((image,id) => (
             <div
               key={id}
               className={s.image}
-              style={{ backgroundImage: `url('${image}')` }}
+              style={{ backgroundImage: `url(${image})` }}
               onClick={() => setCurrentImage(image)}
             />
           ))}
